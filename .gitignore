@@ -6,9 +6,10 @@
 *.sw*
 *.o
 *libft.a
-*libftprintf.a
 *test*
 .vscode/
 *.dSYM
 a.out
 core
+*filler.trace
+*.filler
