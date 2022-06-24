@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:35:27 by altikka           #+#    #+#             */
-/*   Updated: 2022/06/22 12:25:51 by altikka          ###   ########.fr       */
+/*   Updated: 2022/06/24 11:26:00 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_pos
 typedef struct s_grid
 {
 	void	**arr;
-	t_pos	dims;			//raw size
+	t_pos	size;			//raw size
 	t_pos	start;			//highest point
 	t_pos	end;			//lowest point
 }		t_grid;
@@ -41,9 +41,10 @@ typedef struct s_filler
 }		t_filler;
 
 int		init_data(t_filler *f);
-void	free_data(t_filler *f);
+int		panic(t_filler *f, const char *msg);
 int		parse_data(t_filler *f);
 //		more parsing functions...
+void	free_data(t_filler *f);
 int		place_piece(t_filler *f, t_pos *answer);
 
 #endif
