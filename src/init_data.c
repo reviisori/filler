@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:37:02 by altikka           #+#    #+#             */
-/*   Updated: 2022/06/22 13:20:43 by altikka          ###   ########.fr       */
+/*   Updated: 2022/06/24 11:01:15 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	init_players(t_filler *f)
 	if (f->player)
 		return (1);
 	if (get_next_line(0, &line) <= 0)
-		return (-1);//PANIC!
+		return (panic(NULL, "Error: couldn't get player info"));
 	p = ft_strchr(line, 'p');
 	p++;
 	if (*p == '1' || *p == '2')
@@ -31,7 +31,7 @@ static int	init_players(t_filler *f)
 	else
 	{
 		ft_strdel(&line);
-		return (-1);//PANIC!
+		return (panic(NULL, "Error: invalid player number(s)"));
 	}
 	ft_strdel(&line);
 	return (1);

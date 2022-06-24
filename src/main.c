@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:18:34 by altikka           #+#    #+#             */
-/*   Updated: 2022/06/23 11:28:31 by altikka          ###   ########.fr       */
+/*   Updated: 2022/06/24 10:55:19 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int	main(void)
 	int			ret;
 
 	if (init_data(&f) < 0)
-		return (-1);
+		return (panic(NULL, "Error: data initialization failed"));
 	ret = 1;
 	while (ret > 0)
 	{
 		if (parse_data(&f) < 0)
-			return (-1);
+			return (panic(NULL, "Error: data parsing failed"));
 		if (place_piece(&f, &answer) == 1)
 			ft_printf("%d %d\n", answer.x, answer.y);
 		else
