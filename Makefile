@@ -6,7 +6,7 @@
 #    By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 10:33:33 by altikka           #+#    #+#              #
-#    Updated: 2022/06/23 12:17:32 by altikka          ###   ########.fr        #
+#    Updated: 2022/06/24 10:35:13 by altikka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ INCS = -I./includes -I./libft -I./libft/ft_printf/includes
 SRC_DIR = src/
 SRCS = $(SRC_DIR)main.c \
 	   $(SRC_DIR)init_data.c \
-	   $(SRC_DIR)free_data.c \
+	   $(SRC_DIR)clean_up.c \
 	   $(SRC_DIR)parse_data.c \
 	   $(SRC_DIR)place_piece.c
 
