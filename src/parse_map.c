@@ -6,15 +6,15 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:06:36 by altikka           #+#    #+#             */
-/*   Updated: 2022/06/28 17:29:05 by altikka          ###   ########.fr       */
+/*   Updated: 2022/06/28 17:59:48 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-int	set_grid_psoi(t_grid *grid)
+int	set_grid_psoi(t_filler *f)
 {
-	(void ) grid;
+	(void ) f;
 	return (1);
 }
 
@@ -36,7 +36,7 @@ int	parse_map(t_filler *f)
 	ft_putstr_fd("\n", 2);				//ging
 	if (populate_grid(&(f->map), ".ox", 4) < 0) //offset = 4 to skip '000 '
 		return (panic(f, "Error: couldn't populate map"));
-	if (set_grid_psoi(&(f->map)) < 0)
+	if (set_grid_psoi(f) < 0)
 		return (panic(f, "Error: couldn't determine points of interest"));
 	return (1);
 }
