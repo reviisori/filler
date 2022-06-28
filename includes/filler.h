@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:35:27 by altikka           #+#    #+#             */
-/*   Updated: 2022/06/28 17:37:39 by altikka          ###   ########.fr       */
+/*   Updated: 2022/06/28 18:00:33 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		skip_next_line(void);
 int		set_grid_size(t_pos *size, char *needle);
 int		allocate_grid(t_grid *grid, int type);
 int		populate_grid(t_grid *grid, char *marks, int ofs);
-int		set_grid_psoi(t_grid *grid);
+int		set_grid_psoi(t_filler *f);
 void	free_data(t_filler *f);
 int		place_piece(t_filler *f, t_pos *answer);
 
