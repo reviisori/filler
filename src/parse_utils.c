@@ -6,27 +6,58 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 12:21:02 by altikka           #+#    #+#             */
-/*   Updated: 2022/06/27 15:05:08 by altikka          ###   ########.fr       */
+/*   Updated: 2022/06/28 17:35:05 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-int	set_grid_psoi(t_grid *grid)
+static int	validate_line(char *line, char *marks, int len)
 {
-	(void ) grid;
+	if (ft_strlen(line) != (size_t)len)
+		return (panic(NULL, "Error: invalid grid width"));
+	while (*line)
+	{
+		if (!ft_strcasechr(marks, *line))
+			return (panic(NULL, "Error: invalid marking detected"));
+		line++;
+	}
 	return (1);
 }
 
 int	populate_grid(t_grid *grid, char *marks, int ofs)
 {
-	(void ) grid;
-	(void ) marks;
-	(void ) ofs;
+	char	*line;
+	int		ret;
+	int		i;
+
+	i = 0;
+	while (i < grid->size.x)
+	{
+		ret = get_next_line(0, &line);
+		ft_putstr_fd("in populate_grid: index: ", 2);	//d
+		if (i < 10)										//e
+			ft_putstr_fd(" ", 2);						//b
+		ft_putnbr_fd(i, 2);								//u
+		ft_putstr_fd(": ", 2);							//g
+		ft_putstr_fd(line, 2);							//g
+		ft_putstr_fd(" saved: ", 2);					//i
+		if (ret < 0)
+			return (panic(NULL, "Error: couldn't get data to populate grid"));
+		if (ret == 0)
+			return (panic(NULL, "GNL is done reading"));
+		ft_memcpy(grid->arr[i], line + ofs, (size_t)(grid->size.y));
+		ft_strdel(&line);
+		if (validate_line(grid->arr[i], marks, grid->size.y) < 0)
+			return (panic(NULL, "Error: couldn't populate grid"));
+		ft_putendl_fd(grid->arr[i], 2);					//ng
+		i++;
+	}
+	grid->arr[i] = (void *) '\0';
 	return (1);
 }
 
-int	allocate_grid(t_grid *grid)
+int	allocate_grid(t_grid *grid, int type)
 {
 	t_pos	*size;
 	int		i;
@@ -38,7 +69,7 @@ int	allocate_grid(t_grid *grid)
 	i = 0;
 	while (i < size->x)
 	{
-		grid->arr[i] = ft_strnew(sizeof(void *) * size->y);
+		grid->arr[i] = (void *)ft_strnew(type * size->y);
 		if (!grid->arr[i])
 		{
 			ft_memdelarr(&grid->arr);
@@ -61,7 +92,7 @@ int	set_grid_size(t_pos *size, char *needle)
 		return (panic(NULL, "Error: couldn't read grid size"));
 	}
 	size->x = ft_atoi(ft_strchr(line, ' '));
-	size->y = ft_atoi(ft_strchr(line, ' '));
+	size->y = ft_atoi(ft_strrchr(line, ' '));
 	ft_strdel(&line);
 	if (!size->x || !size->y)
 		return (panic(NULL, "Error: invalid grid size"));
@@ -77,7 +108,7 @@ int	skip_next_line(void)
 	if (ret < 0)
 		return (panic(NULL, "Error: skipping next line failed"));
 	if (ret == 0)
-		return (0);//done reading
+		return (0);//done reading, shouldn't happen
 	ft_strdel(&line);
 	return (1);
 }
