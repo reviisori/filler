@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 12:21:02 by altikka           #+#    #+#             */
-/*   Updated: 2022/06/28 20:03:50 by altikka          ###   ########.fr       */
+/*   Updated: 2022/06/29 15:04:04 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	populate_grid(t_grid *grid, char *marks, int ofs)
 	i = 0;
 	while (i < grid->size.x)
 	{
-		ret = get_next_line(0, &line);
+		ret = get_next_line(0, &line);//remove ret and set if gnl <= 0
 		ft_putstr_fd("in populate_grid: index: ", 2);	//d
 		if (i < 10)										//e
 			ft_putstr_fd(" ", 2);						//b
@@ -108,7 +108,7 @@ int	skip_next_line(void)
 	if (ret < 0)
 		return (panic(NULL, "Error: skipping next line failed"));
 	if (ret == 0)
-		return (0);//done reading, shouldn't happen
+		return (0);
 	ft_strdel(&line);
 	return (1);
 }
