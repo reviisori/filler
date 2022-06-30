@@ -13,3 +13,4 @@ a.out
 core
 *filler.trace
 *.filler
+*debug*.txt
