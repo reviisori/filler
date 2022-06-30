@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 12:21:02 by altikka           #+#    #+#             */
-/*   Updated: 2022/06/29 15:04:04 by altikka          ###   ########.fr       */
+/*   Updated: 2022/06/30 13:51:31 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,17 @@ static int	validate_line(char *line, char *marks, int len)
 int	populate_grid(t_grid *grid, char *marks, int ofs)
 {
 	char	*line;
-	int		ret;
 	int		i;
 
 	i = 0;
 	while (i < grid->size.x)
 	{
-		ret = get_next_line(0, &line);//remove ret and set if gnl <= 0
-		ft_putstr_fd("in populate_grid: index: ", 2);	//d
-		if (i < 10)										//e
-			ft_putstr_fd(" ", 2);						//b
-		ft_putnbr_fd(i, 2);								//u
-		ft_putstr_fd(": ", 2);							//g
-		ft_putstr_fd(line, 2);							//g
-		ft_putstr_fd(" saved: ", 2);					//i
-		if (ret < 0)
+		if (get_next_line(0, &line) <= 0)
 			return (panic(NULL, "Error: couldn't get data to populate grid"));
-		if (ret == 0)
-			return (panic(NULL, "GNL is done reading"));
 		ft_memcpy(grid->arr[i], line + ofs, (size_t)(grid->size.y));
 		ft_strdel(&line);
 		if (validate_line(grid->arr[i], marks, grid->size.y) < 0)
 			return (panic(NULL, "Error: couldn't populate grid"));
-		ft_putendl_fd(grid->arr[i], 2);					//ng
 		i++;
 	}
 	grid->arr[i] = (void *) '\0';
