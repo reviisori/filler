@@ -6,7 +6,7 @@
 #    By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 10:33:33 by altikka           #+#    #+#              #
-#    Updated: 2022/06/29 13:52:54 by altikka          ###   ########.fr        #
+#    Updated: 2022/06/30 12:47:45 by altikka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRCS = $(SRC_DIR)main.c \
 	   $(SRC_DIR)parse_map.c \
 	   $(SRC_DIR)parse_utils.c \
 	   $(SRC_DIR)parse_utils_psoi.c \
-	   $(SRC_DIR)place_piece.c
+	   $(SRC_DIR)place_piece.c \
+	   $(SRC_DIR)debug.c
 
 OBJ_DIR = obj/
 OBJS = $(SRCS:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
