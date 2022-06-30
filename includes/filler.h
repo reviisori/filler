@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:35:27 by altikka           #+#    #+#             */
-/*   Updated: 2022/06/30 13:28:50 by altikka          ###   ########.fr       */
+/*   Updated: 2022/06/30 14:48:58 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int		panic(t_filler *f, const char *msg);
 int		debug(t_filler *f);	//for debugging
 int		parse_data(t_filler *f);
 int		parse_map(t_filler *f);
+int		parse_piece(t_filler *f);
 int		skip_next_line(void);
 int		set_grid_size(t_pos *size, char *needle);
 int		allocate_grid(t_grid *grid, size_t type);
