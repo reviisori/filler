@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:06:36 by altikka           #+#    #+#             */
-/*   Updated: 2022/06/29 15:45:18 by altikka          ###   ########.fr       */
+/*   Updated: 2022/06/30 13:51:33 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@ int	parse_map(t_filler *f)
 	else
 		skip_next_line(); 						//skip 'Plateau: X Y'
 	skip_next_line(); 							//skip line with '    01234...'
-	ft_putstr_fd("TURN: ", 2);					//de
-	ft_putnbr_fd(f->turn, 2);					//bug
-	ft_putstr_fd("\n", 2);						//ging
 	if (populate_grid(&(f->map), ".ox", 4) < 0) //offset = 4 to skip '000 '
 		return (panic(f, "Error: couldn't populate map"));
 	set_grid_psoi(&(f->map), f->player);		//points of interest
