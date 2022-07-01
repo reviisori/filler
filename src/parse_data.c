@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:23:26 by altikka           #+#    #+#             */
-/*   Updated: 2022/06/30 14:49:54 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/01 14:35:03 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ int	parse_data(t_filler *f)
 	ft_bzero(&(f->piece.end), sizeof(f->piece.end));
 	if (parse_piece(f) < 0)
 		return (panic(f, "Error: unable to parse piece"));
-//	if (parse_heatmap(f) < 0)
-//		return (panic(f, "Error: unable to parse heatmap"));
+	ft_bzero(&(f->heatmap.start), sizeof(f->heatmap.start));
+	ft_bzero(&(f->heatmap.end), sizeof(f->heatmap.end));
+	if (parse_heatmap(f) < 0)
+		return (panic(f, "Error: unable to parse heatmap"));
 	return (1);
 }
