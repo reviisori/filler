@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:26:18 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/01 15:02:42 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:13:01 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 int	debug(t_filler *f)
 {
 	FILE	*file;
-	char	**m, **p;
-	int		row, col;
-	int		nbr;
+	char	**m, **p, **h;
 
 	file = fopen("debug.txt", "w+");
 	if (!file)
@@ -52,19 +50,11 @@ int	debug(t_filler *f)
 			f->piece.start.y, f->piece.end.x, f->piece.end.y);
 	//heatmap:
 	fprintf(file, "Heatmap:\n");
-	row = 0;
-	while (row < f->heatmap.size.x)
+	h = (char **) f->heatmap.arr;
+	while (*h)
 	{
-		col = 0;
-		fprintf(file, "\t ");
-		while (col < f->heatmap.size.y)
-		{
-			nbr = *((int *) &f->heatmap.arr[row][col]);
-			fprintf(file, "%d", nbr);
-			col++;
-		}
-		fprintf(file, "\n");
-		row++;
+		fprintf(file, "\t %s    \n", *h);
+		h++;
 	}
 	if (fclose(file) == -1)
 		return (-1);
