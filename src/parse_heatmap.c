@@ -6,34 +6,68 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:11:26 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/01 14:37:23 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:46:27 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-static int	allocate_heatmap(t_grid *grid, size_t type)
-{
-	t_pos	*size;
-	int		i;
+//		ft_putstr_fd("in heatmap: ", 2);
+//		ft_putchar_fd(h, 2);
+//		ft_putstr_fd("\n", 2);
 
-	size = &(grid->size);
-	grid->arr = (void **)malloc(sizeof(*grid->arr) * (size->x));
-	if (!grid->arr)
-		return (panic(NULL, "Error: heatmap's memory allocation failed"));
-	i = 0;
-	while (i < size->x)
+static void	set_heatmap(t_grid *grid)
+{
+	t_pos	i;
+	char	h;
+
+	h = '2';
+	while (h != ':')//':'
 	{
-		grid->arr[i] = (void *)malloc(sizeof(type) * size->y);
-		if (!grid->arr[i])
+		i.x = 0;
+		while (i.x < grid->size.x)
 		{
-			ft_memdelarr(&grid->arr);
-			return (panic(NULL, "Error: heatmap's pointer allocation failed"));
+			i.y = 0;
+			while (i.y < grid->size.y)
+			{
+				if (grid->arr[i.x][i.y] == (h - 1) && i.x > 0
+						&& grid->arr[i.x - 1][i.y] == '0')//up
+					grid->arr[i.x - 1][i.y] = h;
+				if (grid->arr[i.x][i.y] == (h - 1) && i.y > 0
+						&& grid->arr[i.x][i.y - 1] == '0')//left
+					grid->arr[i.x][i.y - 1] = h;
+				if (grid->arr[i.x][i.y] == (h - 1) && i.x < grid->size.x - 1
+						&& grid->arr[i.x + 1][i.y] == '0')//down
+					grid->arr[i.x + 1][i.y] = h;
+				if (grid->arr[i.x][i.y] == (h - 1) && i.y < grid->size.y - 1
+						&& grid->arr[i.x][i.y + 1] == '0')//right
+					grid->arr[i.x][i.y + 1] = h;
+				i.y++;
+			}
+			i.x++;
 		}
-		ft_memset(grid->arr[i], 0, (type * size->y));
-		i++;
+		h += 1;
 	}
-	return (1);
+}
+
+static void	init_heatmap(t_filler *f)
+{
+	t_pos	index;
+	char	ch;
+
+	index.x = 0;
+	while (index.x < f->map.size.x)
+	{
+		index.y = 0;
+		while (index.y < f->map.size.y)
+		{
+			ch = f->map.arr[index.x][index.y];
+			if (ft_toupper(ch) == f->opponent)
+				f->heatmap.arr[index.x][index.y] = '1';
+			index.y++;
+		}
+		index.x++;
+	}
 }
 
 int	parse_heatmap(t_filler *f)
@@ -42,8 +76,10 @@ int	parse_heatmap(t_filler *f)
 	{
 		f->heatmap.size.x = f->map.size.x;
 		f->heatmap.size.y = f->map.size.y;
-		if (allocate_heatmap(&(f->heatmap), sizeof(int)) < 0)
-			return (panic(NULL, "Error: allocating heatmap failed"));
+		if (allocate_grid(&(f->heatmap)) < 0)
+			return (panic(f, "Error: allocating heatmap failed"));
 	}
+	init_heatmap(f);
+	set_heatmap(&(f->heatmap));
 	return (1);
 }
