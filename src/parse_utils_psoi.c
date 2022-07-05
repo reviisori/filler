@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 12:44:58 by altikka           #+#    #+#             */
-/*   Updated: 2022/06/30 13:48:38 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/05 14:13:26 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	set_grid_psoi(t_grid *grid, char target)
 		index.y = 0;
 		while (index.y < grid->size.y)
 		{
-			ch = *((char *) &grid->arr[index.x][index.y]);
+			ch = grid->arr[index.x][index.y];
 			if (ft_toupper(ch) == target)
 				update_psoi(grid, &index);
 			index.y++;

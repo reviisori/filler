@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:06:36 by altikka           #+#    #+#             */
-/*   Updated: 2022/06/30 13:51:33 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/05 14:39:03 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	parse_map(t_filler *f)
 	{
 		if (set_grid_size(&(f->map.size), "Plateau") < 0)
 			return (panic(NULL, "Error: invalid map size"));
-		if (allocate_grid(&(f->map), sizeof(char)) < 0)
+		if (allocate_grid(&(f->map)) < 0)
 			return (panic(NULL, "Error: allocating map failed"));
 	}
 	else

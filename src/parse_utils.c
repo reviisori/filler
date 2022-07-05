@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 12:21:02 by altikka           #+#    #+#             */
-/*   Updated: 2022/06/30 13:51:31 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/05 14:44:14 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,30 +41,31 @@ int	populate_grid(t_grid *grid, char *marks, int ofs)
 			return (panic(NULL, "Error: couldn't populate grid"));
 		i++;
 	}
-	grid->arr[i] = (void *) '\0';
 	return (1);
 }
 
-int	allocate_grid(t_grid *grid, size_t type)
+int	allocate_grid(t_grid *grid)
 {
 	t_pos	*size;
 	int		i;
 
 	size = &(grid->size);
-	grid->arr = (void **)malloc(sizeof(*grid->arr) * (size->x + 1));
+	grid->arr = (char **)malloc(sizeof(char *) * (size->x + 1));
 	if (!grid->arr)
 		return (panic(NULL, "Error: grid's memory allocation failed"));
 	i = 0;
 	while (i < size->x)
 	{
-		grid->arr[i] = (void *)ft_strnew(type * size->y);
+		grid->arr[i] = (char *)ft_strnew(sizeof(char) * size->y);
 		if (!grid->arr[i])
 		{
-			ft_memdelarr(&grid->arr);
+			ft_strdelarr(&grid->arr);
 			return (panic(NULL, "Error: grid's pointer allocation failed"));
 		}
+		ft_memset(grid->arr[i], '0', size->y);
 		i++;
 	}
+	grid->arr[i] = (char *) '\0';
 	return (1);
 }
 
