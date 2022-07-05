@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:35:27 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/01 14:36:43 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/05 15:34:46 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_pos
 
 typedef struct s_grid
 {
-	void	**arr;
+	char	**arr;
 	t_pos	size;			//plateau size / raw piece size
 	t_pos	start;			//highest point
 	t_pos	end;			//lowest point
@@ -42,14 +42,14 @@ typedef struct s_filler
 
 int		init_data(t_filler *f);
 int		panic(t_filler *f, const char *msg);
-int		debug(t_filler *f);	//for debugging
+int		debug(t_filler *f);	//debugger
 int		parse_data(t_filler *f);
 int		parse_map(t_filler *f);
 int		parse_piece(t_filler *f);
 int		parse_heatmap(t_filler *f);
 int		skip_next_line(void);
 int		set_grid_size(t_pos *size, char *needle);
-int		allocate_grid(t_grid *grid, size_t type);
+int		allocate_grid(t_grid *grid);
 int		populate_grid(t_grid *grid, char *marks, int ofs);
 void	set_grid_psoi(t_grid *grid, char target);
 void	free_data(t_filler *f);
