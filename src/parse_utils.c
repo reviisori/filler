@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 12:21:02 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/05 14:44:14 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/06 12:57:54 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	allocate_grid(t_grid *grid)
 			ft_strdelarr(&grid->arr);
 			return (panic(NULL, "Error: grid's pointer allocation failed"));
 		}
-		ft_memset(grid->arr[i], '0', size->y);
+		ft_memset(grid->arr[i], '.', size->y);
 		i++;
 	}
 	grid->arr[i] = (char *) '\0';
