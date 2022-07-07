@@ -6,11 +6,16 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:06:36 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/05 14:39:03 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/06 14:18:33 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
+
+//31: skip 'Plateau: X Y'
+//32: skip '    01234...'
+//33: skip '000 ' w/ offset 4 in the beginning of the line
+//35: points of interest
 
 int	parse_map(t_filler *f)
 {
@@ -23,10 +28,10 @@ int	parse_map(t_filler *f)
 			return (panic(NULL, "Error: allocating map failed"));
 	}
 	else
-		skip_next_line(); 						//skip 'Plateau: X Y'
-	skip_next_line(); 							//skip line with '    01234...'
-	if (populate_grid(&(f->map), ".ox", 4) < 0) //offset = 4 to skip '000 '
+		skip_next_line();
+	skip_next_line();
+	if (populate_grid(&(f->map), ".ox", 4) < 0)
 		return (panic(f, "Error: couldn't populate map"));
-	set_grid_psoi(&(f->map), f->player);		//points of interest
+	set_grid_psoi(&(f->map), f->player);
 	return (1);
 }
