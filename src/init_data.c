@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:37:02 by altikka           #+#    #+#             */
-/*   Updated: 2022/06/27 09:35:47 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/06 12:35:00 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	init_players(t_filler *f)
 	char	*line;
 	char	*p;
 
-	if (f->player)
+	if (f->player && f->opponent)
 		return (1);
 	if (get_next_line(0, &line) <= 0)
 		return (panic(NULL, "Error: couldn't get player info"));
