@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:35:27 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/05 15:34:46 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/08 10:05:59 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ typedef struct s_grid
 {
 	char	**arr;
 	t_pos	size;			//plateau size / raw piece size
-	t_pos	start;			//highest point
-	t_pos	end;			//lowest point
+	t_pos	min;			//highest/<- points
+	t_pos	max;			//lowest/-> points
 }		t_grid;
 
 typedef struct s_filler
