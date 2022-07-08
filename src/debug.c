@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:26:18 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/07 11:04:12 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/08 16:48:22 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,18 @@ int	debug(t_filler *f)
 {
 	FILE	*file;
 
-	file = fopen("debug.txt", "w+");
+	file = fopen("debug.txt", "a+");
 	if (!file)
 		return (-1);
 	fprintf(file, " Our hero: '%c' \t\t\tOpponent: %c \t Turn: *%d\n",
 		f->player, f->opponent, f->turn);
 	fprintf(file, " Plateau [%d,%d] \t\tHeatmap\t\t Piece [%d,%d]\n",
 		f->map.size.x, f->map.size.y, f->piece.size.x, f->piece.size.y);
-	fprintf(file, " min/max [%d,%d] [%d,%d]\t[%d,%d] [%d,%d]\t", f->map.start.x,
-		f->map.start.y, f->map.end.x, f->map.end.y, f->heatmap.start.x,
-		f->heatmap.start.y, f->heatmap.end.x, f->heatmap.end.y);
-	fprintf(file, " [%d,%d] [%d,%d]\n\n", f->piece.start.x, f->piece.start.y,
-		f->piece.end.x, f->piece.end.y);
+	fprintf(file, " min/max [%d,%d] [%d,%d]\t\t[%d,%d] [%d,%d]\t", f->map.min.x,
+		f->map.min.y, f->map.max.x, f->map.max.y, f->heatmap.min.x,
+		f->heatmap.min.y, f->heatmap.max.x, f->heatmap.max.y);
+	fprintf(file, " [%d,%d] [%d,%d]\n\n", f->piece.min.x, f->piece.min.y,
+		f->piece.max.x, f->piece.max.y);
 	print_grid(f, file);
 	if (fclose(file) == -1)
 		return (-1);
