@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 12:21:02 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/06 12:57:54 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/09 15:32:34 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	populate_grid(t_grid *grid, char *marks, int ofs)
 	i = 0;
 	while (i < grid->size.x)
 	{
-		if (get_next_line(0, &line) <= 0)
+		if (get_next_line(0, &line) <= 0)//error (neg) or illigal move (0)
 			return (panic(NULL, "Error: couldn't get data to populate grid"));
 		ft_memcpy(grid->arr[i], line + ofs, (size_t)(grid->size.y));
 		ft_strdel(&line);
