@@ -6,30 +6,46 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:25:29 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/11 10:38:03 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/11 13:45:01 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
+#include <stdio.h>
 
 //move to place_utils
-/*int	calc_heat(t_filler *f, t_pos index)
+int	calc_heat(t_filler *f, t_pos index)
 {
-	int	total_heat;
+	t_pos	index_p;
+	int		ofs_y;
+	int		heat;
 
-	(void ) f;
-	(void ) index;
-	total_heat = 10000;
-	return (total_heat);
-}*/
+	index_p = f->piece.min;
+	ofs_y = index_p.y;
+	heat = 0;
+	while (index_p.x <= f->piece.max.x)
+	{
+		index_p.y = ofs_y;
+		while (index_p.y <= f->piece.max.y)
+		{
+			if (f->piece.arr[index_p.x][index_p.y] == '*')
+				heat += (int ) f->heatmap.arr[index.x + index_p.x]
+					[index.y + index_p.y];
+			index_p.y++;
+		}
+		index_p.x++;
+	}
+	return (heat);
+}
 
 //move to place_utils
 int	is_legit_cell(t_filler *f, t_pos index, t_pos index_p, int *overlap)
 {
-	//dprintf(2, "is_legit_cell checking piece[%d][%d]", index_p.x, index_p.y);
-	//dprintf(2, " at map[%d][%d]", index.x + index_p.x, index.y + index_p.y);
-	//dprintf(2, " = '%c'\n",
-	//	f->map.arr[index.x + index_p.x][index.y + index_p.y]);
+	dprintf(2, "is_legit_cell checking piece[%d][%d]", index_p.x, index_p.y);
+	dprintf(2, " at map[%d][%d]", index.x + index_p.x, index.y + index_p.y);
+	dprintf(2, " = '%c'\n",
+		f->map.arr[index.x + index_p.x][index.y + index_p.y]);
+	//
 	if (ft_toupper(f->map.arr[index.x + index_p.x]
 			[index.y + index_p.y]) == f->opponent)
 		return (-1);
@@ -47,7 +63,7 @@ static int	is_legit_spot(t_filler *f, t_pos index)
 	int		overlap;
 	int		ofs_y;
 
-	//dprintf(2, "checking legality of x[%d]y[%d]\n", index.x, index.y);
+	dprintf(2, "checking legality of x[%d]y[%d]\n", index.x, index.y);
 	index_p = f->piece.min;
 	overlap = 0;
 	ofs_y = index_p.y;
@@ -70,13 +86,13 @@ static int	is_legit_spot(t_filler *f, t_pos index)
 
 static int	scan_map(t_filler *f, t_pos *answer, t_pos index, t_pos max)
 {
-//	int	best_heat;
-//	int	heat;
+	int	best_heat;
+	int	heat;
 	int	ofs_y;
 	int	res;
 	int	own_spots_checked;
 
-//	best_heat = 9000;
+	best_heat = 9000;
 	ofs_y = index.y;
 	res = -1;
 	own_spots_checked = 0;
@@ -89,20 +105,20 @@ static int	scan_map(t_filler *f, t_pos *answer, t_pos index, t_pos max)
 			if (is_legit_spot(f, index) == 1)
 			{
 				res = 1;
-				*answer = index;
-//				heat = calc_heat(f, index);
-//				if (heat < best_heat)
-//				{
-//					best_heat = heat;
-//					*answer = index;
-//				}
+				//*answer = index;
+				heat = calc_heat(f, index);
+				if (heat < best_heat)
+				{
+					best_heat = heat;
+					*answer = index;
+				}
 			}
 			own_spots_checked++;
 			index.y++;
 		}
 		index.x++;
 	}
-	//dprintf(2, "checked %d cells\n", own_spots_checked);
+	dprintf(2, "checked %d cells\n", own_spots_checked);
 	return (res);
 }
 
@@ -136,7 +152,6 @@ t_pos	calc_min(t_filler *f)
 	return (min);
 }
 
-//change RETURN to 1 later
 int	place_piece(t_filler *f, t_pos *answer)
 {
 	t_pos	index;
@@ -144,9 +159,10 @@ int	place_piece(t_filler *f, t_pos *answer)
 
 	index = calc_min(f);
 	max = calc_max(f);
-	//dprintf(2, "index[%d][%d] max[%d][%d]\n", index.x, index.y, max.x, max.y);
+	//DELETE <stdio.> include>
+	dprintf(2, "min[%d][%d] max[%d][%d]\n", index.x, index.y, max.x, max.y);
 	if (scan_map(f, answer, index, max) < 0)
 		return (-1);
-	//dprintf(2, "tried[%d][%d]\n", answer->x, answer->y);
+	dprintf(2, "tried[%d][%d]\n", answer->x, answer->y);
 	return (1);
 }
