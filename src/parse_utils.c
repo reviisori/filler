@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 12:21:02 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/09 15:32:34 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/11 10:56:07 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	populate_grid(t_grid *grid, char *marks, int ofs)
 	i = 0;
 	while (i < grid->size.x)
 	{
-		if (get_next_line(0, &line) <= 0)//error (neg) or illigal move (0)
-			return (panic(NULL, "Error: couldn't get data to populate grid"));
+		if (get_next_line(0, &line) <= 0)
+			return (panic(NULL, "Error: gnl meltdown or illigal move"));
 		ft_memcpy(grid->arr[i], line + ofs, (size_t)(grid->size.y));
 		ft_strdel(&line);
 		if (validate_line(grid->arr[i], marks, grid->size.y) < 0)
@@ -62,7 +62,6 @@ int	allocate_grid(t_grid *grid)
 			ft_strdelarr(&grid->arr);
 			return (panic(NULL, "Error: grid's pointer allocation failed"));
 		}
-		ft_memset(grid->arr[i], '.', size->y);
 		i++;
 	}
 	grid->arr[i] = (char *) '\0';
