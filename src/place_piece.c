@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:25:29 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/09 15:21:13 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/11 10:38:03 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ int	is_legit_cell(t_filler *f, t_pos index, t_pos index_p, int *overlap)
 {
 	//dprintf(2, "is_legit_cell checking piece[%d][%d]", index_p.x, index_p.y);
 	//dprintf(2, " at map[%d][%d]", index.x + index_p.x, index.y + index_p.y);
-	//dprintf(2, " = '%c'\n", f->map.arr[index.x + index_p.x][index.y + index_p.y]);
+	//dprintf(2, " = '%c'\n",
+	//	f->map.arr[index.x + index_p.x][index.y + index_p.y]);
 	if (ft_toupper(f->map.arr[index.x + index_p.x]
-		[index.y + index_p.y]) == f->opponent)
+			[index.y + index_p.y]) == f->opponent)
 		return (-1);
 	if (ft_toupper(f->map.arr[index.x + index_p.x]
-		[index.y + index_p.y]) == f->player)
+			[index.y + index_p.y]) == f->player)
 		(*overlap)++;
 	if (*overlap > 1)
 		return (-1);
