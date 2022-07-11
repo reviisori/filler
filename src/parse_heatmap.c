@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:11:26 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/07 11:14:41 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/11 10:49:04 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static void	init_heatmap(t_filler *f)
 	index.x = 0;
 	while (index.x < f->map.size.x)
 	{
+		ft_memset(f->heatmap.arr[index.x], '.', f->heatmap.size.y);
 		index.y = 0;
 		while (index.y < f->map.size.y)
 		{
