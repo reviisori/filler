@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:35:27 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/08 10:05:59 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/12 12:33:52 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,8 @@ int		populate_grid(t_grid *grid, char *marks, int ofs);
 void	set_grid_psoi(t_grid *grid, char target);
 void	free_data(t_filler *f);
 int		place_piece(t_filler *f, t_pos *answer);
+t_pos	calc_min(t_filler *f);
+t_pos	calc_max(t_filler *f);
+int		calc_heat(t_filler *f, t_pos index);
 
 #endif
