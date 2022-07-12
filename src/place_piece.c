@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:25:29 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/11 22:47:32 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/12 09:13:36 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,11 +130,11 @@ t_pos	calc_max(t_filler *f)
 	if (f->map.max.x <= f->map.size.x - (f->piece.max.x - f->piece.min.x + 1))
 		max.x = f->map.max.x - f->piece.min.x;
 	else
-		max.x = f->map.max.x - f->piece.max.x;
+		max.x = f->map.size.x - (f->piece.max.x + 1);
 	if (f->map.max.y <= f->map.size.y - (f->piece.max.y - f->piece.min.y + 1))
 		max.y = f->map.max.y - f->piece.min.y;
 	else
-		max.y = f->map.max.y - f->piece.max.y;
+		max.y = f->map.size.y - (f->piece.max.y + 1);
 	return (max);
 }
 
