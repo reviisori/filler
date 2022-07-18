@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:35:27 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/12 12:33:52 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/18 16:43:39 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # define FILLER_H
 
 # include "libft.h"
+
+# define DEFAULT_HEAT 9000
 
 typedef struct s_pos
 {
@@ -38,6 +40,8 @@ typedef struct s_filler
 	char	player;
 	char	opponent;
 	int		turn;			//for debugging
+	int		best_heat;
+	int		heat;
 }		t_filler;
 
 int		init_data(t_filler *f);
