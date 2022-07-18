@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:11:26 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/11 10:49:04 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/18 16:46:28 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ static void	init_heatmap(t_filler *f)
 
 int	parse_heatmap(t_filler *f)
 {
-	// (f->turn < 3)
 	if (!f->heatmap.arr)
 	{
 		f->heatmap.size.x = f->map.size.x;

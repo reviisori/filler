@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:06:36 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/06 14:18:33 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/18 16:46:57 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 int	parse_map(t_filler *f)
 {
-	// (f->turn < 3)
 	if (!f->map.arr)
 	{
 		if (set_grid_size(&(f->map.size), "Plateau") < 0)
