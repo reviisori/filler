@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:25:29 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/12 12:32:53 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/18 16:53:00 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,10 @@ static int	is_legit_spot(t_filler *f, t_pos index)
 
 static int	scan_map(t_filler *f, t_pos *answer, t_pos index, t_pos max)
 {
-	int	best_heat;
-	int	heat;
 	int	ofs_y;
 	int	res;
 
-	best_heat = 9000;
+	//f->best_heat = DEFAULT_HEAT;
 	ofs_y = index.y;
 	res = -1;
 	while (index.x <= max.x)
@@ -69,10 +67,10 @@ static int	scan_map(t_filler *f, t_pos *answer, t_pos index, t_pos max)
 			if (is_legit_spot(f, index) == 1)
 			{
 				res = 1;
-				heat = calc_heat(f, index);
-				if (heat < best_heat)
+				f->heat = calc_heat(f, index);
+				if (f->heat < f->best_heat)
 				{
-					best_heat = heat;
+					f->best_heat = f->heat;
 					*answer = index;
 				}
 			}
