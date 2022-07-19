@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:06:36 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/18 16:46:57 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/19 15:59:42 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	parse_map(t_filler *f)
 		skip_next_line();
 	skip_next_line();
 	if (populate_grid(&(f->map), ".ox", 4) < 0)
-		return (panic(f, "Error: couldn't populate map"));
+		return (panic(NULL, "Error: couldn't populate map"));
 	set_grid_psoi(&(f->map), f->player);
 	return (1);
 }
