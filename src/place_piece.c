@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:25:29 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/18 16:53:00 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/19 16:29:29 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static int	scan_map(t_filler *f, t_pos *answer, t_pos index, t_pos max)
 	int	ofs_y;
 	int	res;
 
-	//f->best_heat = DEFAULT_HEAT;
 	ofs_y = index.y;
 	res = -1;
 	while (index.x <= max.x)
@@ -86,9 +85,10 @@ int	place_piece(t_filler *f, t_pos *answer)
 	t_pos	index;
 	t_pos	max;
 
+	f->best_heat = DEFAULT_HEAT;//
 	index = calc_min(f);
 	max = calc_max(f);
 	if (scan_map(f, answer, index, max) < 0)
 		return (-1);
-	return (1);
+	return (-1);// change to 1
 }
