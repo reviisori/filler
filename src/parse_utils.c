@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 12:21:02 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/11 10:56:07 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/19 16:12:17 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ int	populate_grid(t_grid *grid, char *marks, int ofs)
 	while (i < grid->size.x)
 	{
 		if (get_next_line(0, &line) <= 0)
+		{
+			ft_strdel(&line);
 			return (panic(NULL, "Error: gnl meltdown or illigal move"));
+		}
 		ft_memcpy(grid->arr[i], line + ofs, (size_t)(grid->size.y));
 		ft_strdel(&line);
 		if (validate_line(grid->arr[i], marks, grid->size.y) < 0)
@@ -58,10 +61,7 @@ int	allocate_grid(t_grid *grid)
 	{
 		grid->arr[i] = (char *)ft_strnew(sizeof(char) * size->y);
 		if (!grid->arr[i])
-		{
-			ft_strdelarr(&grid->arr);
 			return (panic(NULL, "Error: grid's pointer allocation failed"));
-		}
 		i++;
 	}
 	grid->arr[i] = (char *) '\0';
@@ -73,7 +73,10 @@ int	set_grid_size(t_pos *size, char *needle)
 	char	*line;
 
 	if (get_next_line(0, &line) <= 0)
+	{
+		ft_strdel(&line);
 		return (panic(NULL, "Error: failed to get grid size"));
+	}
 	if (!ft_strstr(line, needle))
 	{
 		ft_strdel(&line);
@@ -94,7 +97,10 @@ int	skip_next_line(void)
 
 	ret = get_next_line(0, &line);
 	if (ret < 0)
+	{
+		ft_strdel(&line);
 		return (panic(NULL, "Error: skipping next line failed"));
+	}
 	if (ret == 0)
 		return (0);
 	ft_strdel(&line);
