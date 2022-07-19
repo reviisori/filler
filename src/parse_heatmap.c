@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:11:26 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/18 16:46:28 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/19 16:01:07 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	parse_heatmap(t_filler *f)
 		f->heatmap.size.x = f->map.size.x;
 		f->heatmap.size.y = f->map.size.y;
 		if (allocate_grid(&(f->heatmap)) < 0)
-			return (panic(f, "Error: allocating heatmap failed"));
+			return (panic(NULL, "Error: allocating heatmap failed"));
 	}
 	init_heatmap(f);
 	set_grid_psoi(&(f->heatmap), '0');
