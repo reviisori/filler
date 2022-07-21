@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:35:27 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/18 16:43:39 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/21 15:48:58 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ typedef struct s_pos
 typedef struct s_grid
 {
 	char	**arr;
-	t_pos	size;			//plateau size / raw piece size
-	t_pos	min;			//highest/<- points
-	t_pos	max;			//lowest/-> points
+	t_pos	size;
+	t_pos	min;
+	t_pos	max;
 }		t_grid;
 
 typedef struct s_filler
@@ -39,14 +39,14 @@ typedef struct s_filler
 	t_grid	piece;
 	char	player;
 	char	opponent;
-	int		turn;			//for debugging
+	int		turn;
 	int		best_heat;
 	int		heat;
 }		t_filler;
 
 int		init_data(t_filler *f);
 int		panic(t_filler *f, const char *msg);
-int		debug(t_filler *f);	//debugger
+int		debug(t_filler *f);
 int		parse_data(t_filler *f);
 int		parse_map(t_filler *f);
 int		parse_piece(t_filler *f);
