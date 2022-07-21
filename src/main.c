@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:18:34 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/19 13:53:26 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/21 15:52:17 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ int	main(void)
 		f.turn += 2;
 	}
 	free_data(&f);
-	system("leaks altikka.filler > leaks.txt");
 	return (0);
 }
