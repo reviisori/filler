@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:23:26 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/19 15:59:09 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/21 15:45:25 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	parse_data(t_filler *f)
 {
+	if (f)
+		free_data(f);
 	ft_bzero(&(f->map.min), sizeof(f->map.min));
 	ft_bzero(&(f->map.max), sizeof(f->map.max));
 	if (parse_map(f) < 0)
