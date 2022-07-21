@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:25:29 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/19 16:29:29 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/21 15:47:02 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ int	place_piece(t_filler *f, t_pos *answer)
 	t_pos	index;
 	t_pos	max;
 
-	f->best_heat = DEFAULT_HEAT;//
+	f->best_heat = DEFAULT_HEAT;
 	index = calc_min(f);
 	max = calc_max(f);
 	if (scan_map(f, answer, index, max) < 0)
 		return (-1);
-	return (-1);// change to 1
+	return (1);
 }
