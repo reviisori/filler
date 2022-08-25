@@ -5,12 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/23 11:25:29 by altikka           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/07/12 12:43:54 by altikka          ###   ########.fr       */
-=======
-/*   Updated: 2022/07/21 15:47:02 by altikka          ###   ########.fr       */
->>>>>>> 8043b6e68d97abbea6c250615a6b7b6ee94f83df
+/*   Created: 2022/08/25 10:49:01 by altikka           #+#    #+#             */
+/*   Updated: 2022/08/25 10:49:07 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +66,8 @@ static int	scan_map(t_filler *f, t_pos *answer, t_pos index, t_pos max)
 			if (is_legit_spot(f, index) == 1)
 			{
 				res = 1;
-<<<<<<< HEAD
-				heat = calc_heat(f, index);
-				if (heat < best_heat) //test '<='
-=======
 				f->heat = calc_heat(f, index);
-				if (f->heat < f->best_heat)
->>>>>>> 8043b6e68d97abbea6c250615a6b7b6ee94f83df
+				if (f->heat < f->best_heat) //test '<='
 				{
 					f->best_heat = f->heat;
 					*answer = index;
