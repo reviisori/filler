@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:25:29 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/12 12:32:53 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/12 12:43:54 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	scan_map(t_filler *f, t_pos *answer, t_pos index, t_pos max)
 			{
 				res = 1;
 				heat = calc_heat(f, index);
-				if (heat < best_heat)
+				if (heat < best_heat) //test '<='
 				{
 					best_heat = heat;
 					*answer = index;
