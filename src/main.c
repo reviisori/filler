@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:18:34 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/07 11:13:41 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/21 15:52:17 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(void)
 	while (ret > 0)
 	{
 		if (parse_data(&f) < 0)
-			return (panic(NULL, "Error: data parsing failed"));
+			return (panic(&f, "Error: data parsing failed"));
 		debug(&f);
 		if (place_piece(&f, &answer) == 1)
 			ft_printf("%d %d\n", answer.x, answer.y);

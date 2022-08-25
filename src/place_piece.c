@@ -6,7 +6,11 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:25:29 by altikka           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/07/12 12:43:54 by altikka          ###   ########.fr       */
+=======
+/*   Updated: 2022/07/21 15:47:02 by altikka          ###   ########.fr       */
+>>>>>>> 8043b6e68d97abbea6c250615a6b7b6ee94f83df
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +57,9 @@ static int	is_legit_spot(t_filler *f, t_pos index)
 
 static int	scan_map(t_filler *f, t_pos *answer, t_pos index, t_pos max)
 {
-	int	best_heat;
-	int	heat;
 	int	ofs_y;
 	int	res;
 
-	best_heat = 9000;
 	ofs_y = index.y;
 	res = -1;
 	while (index.x <= max.x)
@@ -69,10 +70,15 @@ static int	scan_map(t_filler *f, t_pos *answer, t_pos index, t_pos max)
 			if (is_legit_spot(f, index) == 1)
 			{
 				res = 1;
+<<<<<<< HEAD
 				heat = calc_heat(f, index);
 				if (heat < best_heat) //test '<='
+=======
+				f->heat = calc_heat(f, index);
+				if (f->heat < f->best_heat)
+>>>>>>> 8043b6e68d97abbea6c250615a6b7b6ee94f83df
 				{
-					best_heat = heat;
+					f->best_heat = f->heat;
 					*answer = index;
 				}
 			}
@@ -88,6 +94,7 @@ int	place_piece(t_filler *f, t_pos *answer)
 	t_pos	index;
 	t_pos	max;
 
+	f->best_heat = DEFAULT_HEAT;
 	index = calc_min(f);
 	max = calc_max(f);
 	if (scan_map(f, answer, index, max) < 0)

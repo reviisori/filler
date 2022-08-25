@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:37:02 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/06 12:35:00 by altikka          ###   ########.fr       */
+/*   Updated: 2022/07/19 16:16:12 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ static int	init_players(t_filler *f)
 	if (f->player && f->opponent)
 		return (1);
 	if (get_next_line(0, &line) <= 0)
+	{
+		ft_strdel(&line);
 		return (panic(NULL, "Error: couldn't get player info"));
+	}
 	p = ft_strchr(line, 'p');
 	p++;
 	if (*p == '1' || *p == '2')
@@ -42,5 +45,6 @@ int	init_data(t_filler *f)
 	ft_bzero(f, sizeof(*f));
 	init_players(f);
 	f->turn = 1 + (f->player == 'X');
+	f->heat = 0;
 	return (1);
 }

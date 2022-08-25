@@ -14,3 +14,4 @@ core
 *filler.trace
 *.filler
 *debug*.txt
+leaks.txt
