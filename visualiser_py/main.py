@@ -6,7 +6,7 @@
 #    By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/25 14:26:19 by altikka           #+#    #+#              #
-#    Updated: 2022/08/30 17:07:15 by altikka          ###   ########.fr        #
+#    Updated: 2022/08/31 15:18:53 by altikka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,13 @@ import sys
 pygame.init()
 
 ###main window and title:
-pygame.display.set_caption('Filler Visualiser')
-window = pygame.display.set_mode((800, 800))
-background = pygame.Surface((800, 800))
-background.fill(pygame.Color('#becb11'))
-
-bg_test = pygame.Surface((800, 800))
-bg_test.fill(pygame.Color('#11cb7b'))
+pygame.display.set_caption("Filler Visualiser")
+resolution = 800
+window = pygame.display.set_mode((resolution, resolution))
+bg_main= pygame.Surface((resolution, resolution))
+bg_main.fill(pygame.Color("#becb11"))
+bg_play = pygame.Surface((resolution, resolution))
+bg_play.fill(pygame.Color("#11cb7b"))
 
 ###load & scale images:
 logo_img = pygame.image.load("./resources/filler_logo.png").convert_alpha()
@@ -32,9 +32,13 @@ start_img = pygame.image.load("./resources/button_start.png").convert_alpha()
 start_img = pygame.transform.scale(start_img, (210, 90))
 start_d_img = pygame.image.load("./resources/button_start_down.png").convert_alpha()
 start_d_img = pygame.transform.scale(start_d_img, (210, 90))
-empty_img = pygame.image.load("./resources/sqr_empty.png").convert_alpha()
-empty_img = pygame.transform.scale(empty_img, (43, 43))# 44x44 for map00, 15x15 for map01 and 5x5 for map02
 
+empty_img = pygame.image.load("./resources/sqr_empty.png").convert_alpha()
+empty_img = pygame.transform.scale(empty_img, (19, 19))
+o_img = pygame.image.load("./resources/sqr_o.png").convert_alpha()
+o_img = pygame.transform.scale(o_img, (19, 19))
+x_img = pygame.image.load("./resources/sqr_x.png").convert_alpha()
+x_img = pygame.transform.scale(x_img, (19, 19))
 
 ###button class:
 class button():
@@ -56,16 +60,7 @@ class button():
         surface.blit(self.image, (self.rect.x,  self.rect.y))
         return mouse_action
 
-##################################
-#                                #
-# I: get player data             #
-# II: get board data             #
-# III: draw the board            #
-# IV: get piece data             #
-# V: update the board and pieces #
-#                                #
-##################################
-
+###function to quickly skip x ammount of line in stdin:
 def return_next_line(x):
     for _ in range(x):
         sys.stdin.readline()
@@ -76,25 +71,26 @@ def return_next_line(x):
 init_data = True
 def play():
     is_playing = True
-    global init_data
 
-    ###I: player data
+    ###I: get player data
+    global init_data
     if init_data:
         p1 = return_next_line(5)
         p2 = return_next_line(1)
-        print(p1)#needs better splitting and grebbing
-        print(p2)#^
+        #print(p1)#needs better splitting and grebbing
+        #print(p2)#for future display
 
-        ###II: map data
+        ###II: get map data
         plateau = return_next_line(1)
-        print(plateau)
         map_size = plateau.rstrip(":\n").split(" ")
         map_x = int(map_size[1])
         map_y = int(map_size[2])
-        print(map_x, map_y)
         init_data = False
+        #print(plateau)
+        #print(map_x, map_y)
+
     while is_playing:
-        window.blit(bg_test, (0, 0))
+        window.blit(bg_play, (0, 0))
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
@@ -104,49 +100,79 @@ def play():
                 print("Exiting the game...")
                 is_playing = False
 
-        ###III: drawing the map
-        sqr_side = 43
-        x_ofs = 10
-        y_ofs = 25
-        s = sys.stdin.readline()
+        ###V: exit the game
+        s = sys.stdin.readline()#has '== X fin: ...' at the end
+        fin = s.split(" ")
+        if "fin" in fin[2]:
+            print("FIN")
+            is_playing = False
+            pygame.time.wait(2000)
+            return
+
+        ###III: draw the map
+        sqr_side = 19
+        x_ofs = 172
+        y_ofs = 20
+        y_reset = y_ofs
         x = 0
         while x < map_x:
             s = sys.stdin.readline()
             y = 4
             while y < map_y + 4:
-                window.blit(empty_img, (y_ofs, x_ofs))
+                if s[y] == 'o' or s[y] == 'O':
+                    window.blit(o_img, (y_ofs, x_ofs))
+                elif s[y] == 'x' or s[y] == 'X':
+                    window.blit(x_img, (y_ofs, x_ofs))
+                else:
+                    window.blit(empty_img, (y_ofs, x_ofs))
                 y_ofs = y_ofs + sqr_side
-                #print(s[y], end=" ")#test
                 y += 1
             x_ofs = x_ofs + sqr_side
-            y_ofs = 25
-            #print("\n")#test
+            y_ofs = y_reset
             x += 1
-        pygame.display.update()
-        pygame.time.wait(60)
 
-### button variables:
+        ###IV: get piece data SKIPPED FOR NOW
+        piece = return_next_line(0)
+        piece_size = piece.rstrip(":\n").split(" ")
+        piece_x = int(piece_size[1])
+        piece_y = int(piece_size[2])
+        s = return_next_line(piece_x + 1)#THE SKIP
+
+        ##react if one of the players can't play anymore
+        faint = s.rstrip(":\n").split(" ")
+        if "Piece" in faint[0]:
+            s = return_next_line(int(faint[1]) + 1)
+        #print(piece)
+        #print(piece_x, piece_y)
+
+        pygame.display.update()
+        pygame.time.wait(30)#speed of the game
+
+###button variables:
 start_button = button(295, 525, start_img)
 start_button_d = button(295, 525, start_d_img)
 
-###event loop:
+###main menu:
 is_running = True
 while is_running:
-    window.blit(background, (0, 0))
+    window.blit(bg_main, (0, 0))
     window.blit(logo_img, (100, 340))
     
-    ###draw the actual button:
     if start_button.draw(window):
         start_button_d.draw(window)
         pygame.display.update()
-        pygame.time.wait(120)
-
-        ###play the game:
+        pygame.time.wait(200)
         print("PLAY")
         play()
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RETURN:
+                start_button_d.draw(window)
+                pygame.display.update()
+                pygame.time.wait(200)
+                print("PLAY")
+                play()
             if event.key == pygame.K_ESCAPE:
                 print("Quitting...")
                 is_running = False
