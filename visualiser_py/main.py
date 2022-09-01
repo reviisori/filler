@@ -6,7 +6,7 @@
 #    By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/25 14:26:19 by altikka           #+#    #+#              #
-#    Updated: 2022/08/31 15:18:53 by altikka          ###   ########.fr        #
+#    Updated: 2022/09/01 16:20:31 by altikka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,20 +25,13 @@ bg_main.fill(pygame.Color("#becb11"))
 bg_play = pygame.Surface((resolution, resolution))
 bg_play.fill(pygame.Color("#11cb7b"))
 
-###load & scale images:
+###load & scale logo & buttons:
 logo_img = pygame.image.load("./resources/filler_logo.png").convert_alpha()
 logo_img = pygame.transform.scale(logo_img, (600, 160))
 start_img = pygame.image.load("./resources/button_start.png").convert_alpha()
 start_img = pygame.transform.scale(start_img, (210, 90))
 start_d_img = pygame.image.load("./resources/button_start_down.png").convert_alpha()
 start_d_img = pygame.transform.scale(start_d_img, (210, 90))
-
-empty_img = pygame.image.load("./resources/sqr_empty.png").convert_alpha()
-empty_img = pygame.transform.scale(empty_img, (19, 19))
-o_img = pygame.image.load("./resources/sqr_o.png").convert_alpha()
-o_img = pygame.transform.scale(o_img, (19, 19))
-x_img = pygame.image.load("./resources/sqr_x.png").convert_alpha()
-x_img = pygame.transform.scale(x_img, (19, 19))
 
 ###button class:
 class button():
@@ -60,6 +53,36 @@ class button():
         surface.blit(self.image, (self.rect.x,  self.rect.y))
         return mouse_action
 
+###button variables:
+start_button = button(295, 525, start_img)
+start_button_d = button(295, 525, start_d_img)
+
+###function to load & scale map resources accordingly:
+def load_map_resources(sqr_side):
+    empty_img = pygame.image.load("./resources/sqr_empty.png").convert_alpha()
+    empty_img = pygame.transform.scale(empty_img, (sqr_side, sqr_side))
+    o_img = pygame.image.load("./resources/sqr_o.png").convert_alpha()
+    o_img = pygame.transform.scale(o_img, (sqr_side, sqr_side))
+    x_img = pygame.image.load("./resources/sqr_x.png").convert_alpha()
+    x_img = pygame.transform.scale(x_img, (sqr_side, sqr_side))
+    return empty_img, o_img, x_img
+
+###function to init map data:
+def init_map_data(dim, res):
+    if dim == 15:
+        sqr_side = 40
+        x = (resolution - sqr_side * dim) / 2
+        y = (resolution - sqr_side * 17) / 2
+    elif dim == 24:
+        sqr_side = 19
+        x = (resolution - sqr_side * dim) / 2
+        y = (resolution - sqr_side * 40) / 2
+    else:
+        sqr_side = 6
+        x = (resolution - sqr_side * dim) / 2
+        y = (resolution - sqr_side * 99) / 2
+    return x, y, sqr_side 
+
 ###function to quickly skip x ammount of line in stdin:
 def return_next_line(x):
     for _ in range(x):
@@ -67,13 +90,22 @@ def return_next_line(x):
     str = sys.stdin.readline()
     return str
 
+def pause_game():
+    paused = True
+    while paused:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    print(">")
+                    paused = False
+
 ###game loop:
-init_data = True
 def play():
     is_playing = True
+    init_data = True
+    paused = True
 
     ###I: get player data
-    global init_data
     if init_data:
         p1 = return_next_line(5)
         p2 = return_next_line(1)
@@ -93,6 +125,9 @@ def play():
         window.blit(bg_play, (0, 0))
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE and paused == False:
+                    print("||")
+                    pause_game()
                 if event.key == pygame.K_ESCAPE:
                     print("Exiting the game...")
                     is_playing = False
@@ -110,9 +145,8 @@ def play():
             return
 
         ###III: draw the map
-        sqr_side = 19
-        x_ofs = 172
-        y_ofs = 20
+        x_ofs, y_ofs, sqr_side, = init_map_data(map_x, resolution)
+        empty_img, o_img, x_img = load_map_resources(sqr_side)
         y_reset = y_ofs
         x = 0
         while x < map_x:
@@ -131,7 +165,7 @@ def play():
             y_ofs = y_reset
             x += 1
 
-        ###IV: get piece data SKIPPED FOR NOW
+        ###IV: get piece data SKIPPED RN
         piece = return_next_line(0)
         piece_size = piece.rstrip(":\n").split(" ")
         piece_x = int(piece_size[1])
@@ -146,11 +180,11 @@ def play():
         #print(piece_x, piece_y)
 
         pygame.display.update()
+        if paused:
+            print("||")
+            pause_game()
+            paused = False
         pygame.time.wait(30)#speed of the game
-
-###button variables:
-start_button = button(295, 525, start_img)
-start_button_d = button(295, 525, start_d_img)
 
 ###main menu:
 is_running = True
@@ -161,7 +195,7 @@ while is_running:
     if start_button.draw(window):
         start_button_d.draw(window)
         pygame.display.update()
-        pygame.time.wait(200)
+        pygame.time.wait(240)
         print("PLAY")
         play()
 
@@ -170,7 +204,7 @@ while is_running:
             if event.key == pygame.K_RETURN:
                 start_button_d.draw(window)
                 pygame.display.update()
-                pygame.time.wait(200)
+                pygame.time.wait(240)
                 print("PLAY")
                 play()
             if event.key == pygame.K_ESCAPE:
@@ -179,4 +213,5 @@ while is_running:
         if event.type == pygame.QUIT:
             print("Quitting...")
             is_running = False
+
     pygame.display.update()
