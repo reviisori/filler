@@ -6,7 +6,7 @@
 #    By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/25 14:26:19 by altikka           #+#    #+#              #
-#    Updated: 2022/09/01 16:20:31 by altikka          ###   ########.fr        #
+#    Updated: 2022/09/01 20:19:04 by altikka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,12 +98,22 @@ def pause_game():
                 if event.key == pygame.K_SPACE:
                     print(">")
                     paused = False
+                if event.key == pygame.K_ESCAPE:
+                    print("Exiting the game...")
+                    paused = False
+                    return False
+            if event.type == pygame.QUIT:
+                print("Exiting the game...")
+                paused = False
+                return False
+    return True
 
 ###game loop:
 def play():
     is_playing = True
     init_data = True
     paused = True
+    game_speed = 50
 
     ###I: get player data
     if init_data:
@@ -127,7 +137,14 @@ def play():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and paused == False:
                     print("||")
-                    pause_game()
+                    if not pause_game():
+                        is_playing = False
+                if event.key == pygame.K_UP and game_speed == 50:
+                    print(">>")
+                    game_speed = 10
+                if event.key == pygame.K_DOWN and game_speed == 10:
+                    print(">")
+                    game_speed = 50
                 if event.key == pygame.K_ESCAPE:
                     print("Exiting the game...")
                     is_playing = False
@@ -141,7 +158,7 @@ def play():
         if "fin" in fin[2]:
             print("FIN")
             is_playing = False
-            pygame.time.wait(2000)
+            pygame.time.wait(2000)#something else later
             return
 
         ###III: draw the map
@@ -165,7 +182,7 @@ def play():
             y_ofs = y_reset
             x += 1
 
-        ###IV: get piece data SKIPPED RN
+        ###IV: get piece data SKIPPED FOR NOW
         piece = return_next_line(0)
         piece_size = piece.rstrip(":\n").split(" ")
         piece_x = int(piece_size[1])
@@ -173,18 +190,21 @@ def play():
         s = return_next_line(piece_x + 1)#THE SKIP
 
         ##react if one of the players can't play anymore
-        faint = s.rstrip(":\n").split(" ")
-        if "Piece" in faint[0]:
-            s = return_next_line(int(faint[1]) + 1)
+        rip = s.rstrip(":\n").split(" ")
+        if "Piece" in rip[0]:
+            s = return_next_line(int(rip[1]) + 1)
         #print(piece)
         #print(piece_x, piece_y)
 
         pygame.display.update()
+
         if paused:
             print("||")
-            pause_game()
-            paused = False
-        pygame.time.wait(30)#speed of the game
+            if not pause_game():
+                is_playing = False
+            else:
+                paused = False
+        pygame.time.wait(game_speed)
 
 ###main menu:
 is_running = True
