@@ -6,7 +6,7 @@
 #    By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/25 14:26:19 by altikka           #+#    #+#              #
-#    Updated: 2022/09/02 16:42:11 by altikka          ###   ########.fr        #
+#    Updated: 2022/09/02 21:40:55 by altikka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,7 +105,6 @@ def pause_game():
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    print(">")
                     paused = False
                 if event.key == pygame.K_ESCAPE:
                     print("Exiting the game...")
@@ -130,10 +129,7 @@ def play():
         p2 = return_next_line(1)
         p1_name = p1.split("/")
         p2_name = p2.split("/")
-        #print(p1)#needs better splitting and grebbing
-        #print(p2)#for future display
-        print(p1_name[1].split(".")[0])
-        print(p2_name[1].split(".")[0])
+        print(p1_name[1].split(".")[0], "vs.", p2_name[1].split(".")[0])
 
         ###II: get map data
         plateau = return_next_line(1)
@@ -152,26 +148,30 @@ def play():
 
         window.blit(bg_play, (0, 0))
 
-        ###player names:
+        ###player names & game color:
         p1_font = pygame.font.Font(game_font, 18)
-        p1_text= hero.render(p1_name[1].split(".")[0], True, "#000000")
-        window.blit(p1_text, (x_reset + 115, 30))#needs calc
+        p1_text= p1_font.render(p1_name[1].split(".")[0], True, "#000000")
+        window.blit(p1_text, (y_reset + 70, x_reset - 50))
         p1_img = pygame.image.load("./resources/sqr_o.png").convert_alpha()
-        window.blit(p1_img, (x_reset + 100, 36))
+        window.blit(p1_img, (y_reset + 55, x_reset - 44))
 
         p2_font = pygame.font.Font(game_font, 18)
-        p2_text= hero.render(p2_name[1].split(".")[0], True, "#000000")
-        window.blit(p2_text, (resolution / 2 + 50, 30))# needs calc
+        p2_text= p2_font.render(p2_name[1].split(".")[0], True, "#000000")
+        #window.blit(p2_text, (resolution / 2 + 50, x_reset - 50))# needs calc
+        window.blit(p2_text, (y_reset + 70, x_reset - 25))# needs calc
         p2_img = pygame.image.load("./resources/sqr_x.png").convert_alpha()
-        window.blit(p2_img, (resolution / 2 + 35, 36))
+        #window.blit(p2_img, (resolution / 2 + 35, x_reset - 44))
+        window.blit(p2_img, (y_reset + 55, x_reset - 19))
 
         ###V: exit the game
         s = sys.stdin.readline()#has '== X fin: ...' at the end
-        fin = s.split(" ")
-        if "fin" in fin[2]:
+        fin_x = s.split(" ")
+        if "fin" in fin_x[2]:
+            print("O:", int(score_o))
+            print("X:", int(fin_x[3]))
             print("FIN")
             is_playing = False
-            pygame.time.wait(2000)#something else later
+            pygame.time.wait(2000)#SOMETHING BETTER LATER
             return
 
         ###III: draw the map
@@ -200,7 +200,9 @@ def play():
         s = return_next_line(piece_x)#THE SKIP
 
         s = return_next_line(0)#has '== 0 fin: ...' at the end
-        #print(s)
+        fin_o = s.split(" ")
+        if "fin" in fin_o[2]:
+            score_o = fin_o[3]
 
         ##react if one of the players can't play anymore
         rip = s.rstrip(":\n").split(" ")
@@ -217,6 +219,10 @@ def play():
                     pygame.display.update()
                     if not pause_game():
                         is_playing = False
+                    elif game_speed == 50:
+                        print(">")
+                    else:
+                        print(">>")
                 if event.key == pygame.K_UP and game_speed == 50:
                     print(">>")
                     game_speed = 10
@@ -245,6 +251,7 @@ def play():
             if not pause_game():
                 is_playing = False
             else:
+                print(">")
                 paused = False
 
         pygame.time.wait(game_speed)
@@ -255,11 +262,6 @@ start = True
 while is_running:
     window.blit(bg_main, (0, 0))
     window.blit(logo_img, (100, 340))
-
-    ###FONT TEST:
-    hero = pygame.font.Font(game_font, 18)
-    hero_text= hero.render("by altikka", True, "#38c5f8")
-    window.blit(hero_text, (30, 30))
     
     if start and start_button.draw(window):
         start_button_d.draw(window)
@@ -268,10 +270,18 @@ while is_running:
         print("PLAY")
         play()
         start = False
+    if not start:
+        by_font = pygame.font.Font(game_font, 18)
+        by_who = by_font.render("by altikka", True, "#38c5f8")
+        #window.blit(by_who, (220, 510))
+        window.blit(by_who, (10, 10))
+        bye_font = pygame.font.Font(game_font, 16)
+        bye = bye_font.render("Press 'Esc' to exit", True, "#000000")
+        window.blit(bye, (260, 530))
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RETURN:
+            if event.key == pygame.K_RETURN and start:
                 start_button_d.draw(window)
                 pygame.display.update()
                 pygame.time.wait(240)
