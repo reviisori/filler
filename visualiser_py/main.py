@@ -6,7 +6,7 @@
 #    By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/25 14:26:19 by altikka           #+#    #+#              #
-#    Updated: 2022/09/02 21:40:55 by altikka          ###   ########.fr        #
+#    Updated: 2022/09/05 18:32:45 by altikka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -121,6 +121,7 @@ def play():
     is_playing = True
     init_data = True
     paused = True
+    end = False
     game_speed = 50
 
     ###I: get player data
@@ -129,7 +130,7 @@ def play():
         p2 = return_next_line(1)
         p1_name = p1.split("/")
         p2_name = p2.split("/")
-        print(p1_name[1].split(".")[0], "vs.", p2_name[1].split(".")[0])
+        print(p1_name[-1].split(".")[0], "vs.", p2_name[-1].split(".")[0])
 
         ###II: get map data
         plateau = return_next_line(1)
@@ -150,13 +151,13 @@ def play():
 
         ###player names & game color:
         p1_font = pygame.font.Font(game_font, 18)
-        p1_text= p1_font.render(p1_name[1].split(".")[0], True, "#000000")
+        p1_text = p1_font.render(p1_name[-1].split(".")[0], True, "#000000")
         window.blit(p1_text, (y_reset + 70, x_reset - 50))
         p1_img = pygame.image.load("./resources/sqr_o.png").convert_alpha()
         window.blit(p1_img, (y_reset + 55, x_reset - 44))
 
         p2_font = pygame.font.Font(game_font, 18)
-        p2_text= p2_font.render(p2_name[1].split(".")[0], True, "#000000")
+        p2_text = p2_font.render(p2_name[-1].split(".")[0], True, "#000000")
         #window.blit(p2_text, (resolution / 2 + 50, x_reset - 50))# needs calc
         window.blit(p2_text, (y_reset + 70, x_reset - 25))# needs calc
         p2_img = pygame.image.load("./resources/sqr_x.png").convert_alpha()
@@ -164,14 +165,13 @@ def play():
         window.blit(p2_img, (y_reset + 55, x_reset - 19))
 
         ###V: exit the game
-        s = sys.stdin.readline()#has '== X fin: ...' at the end
-        fin_x = s.split(" ")
-        if "fin" in fin_x[2]:
+        s = sys.stdin.readline()
+        if end:
             print("O:", int(score_o))
-            print("X:", int(fin_x[3]))
+            print("X:", int(score_x))
             print("FIN")
+            pause_game()
             is_playing = False
-            pygame.time.wait(2000)#SOMETHING BETTER LATER
             return
 
         ###III: draw the map
@@ -199,10 +199,41 @@ def play():
         piece_y = int(piece_size[2])
         s = return_next_line(piece_x)#THE SKIP
 
+        ###final scores:
         s = return_next_line(0)#has '== 0 fin: ...' at the end
         fin_o = s.split(" ")
         if "fin" in fin_o[2]:
             score_o = fin_o[3]
+            s = sys.stdin.readline()#has '== X fin: ...' at the end
+            fin_x = s.split(" ")
+            if "fin" in fin_x[2]:
+                score_x = fin_x[3]
+                len_o = len(score_o)
+                len_x = len(score_x)
+                score_ofs = max(len_o, len_x) - 1
+                p1_wins = p1_font.render(score_o.rjust(len_x, " ").rstrip("\n"), True, "#000000")
+                window.blit(p1_wins, ((resolution - (y_reset + 60 + score_ofs * 18)), x_reset - 50))
+                p2_wins = p2_font.render(score_x.rjust(len_o, " ").rstrip("\n"), True, "#000000")
+                window.blit(p2_wins, ((resolution - (y_reset + 60 + score_ofs * 18)), x_reset - 25))
+
+                ###result:
+                score_font = pygame.font.Font(game_font, 24)
+                if int(int(score_o) == int(fin_x[3])):
+                    winner = "DRAW"
+                    score = score_font.render(winner, True, "#000000")
+                    print("DRAW")
+                elif int(int(score_o) > int(fin_x[3])):
+                    winner = p1_name[-1].split(".")[0] + " wins!" 
+                    score = score_font.render(winner, True, "#000000")
+                    print(p1_name[-1].split(".")[0], "WINS!")
+                else:
+                    winner = p2_name[-1].split(".")[0] + " wins!"
+                    score = score_font.render(winner, True, "#000000")
+                    print(p2_name[-1].split(".")[0], "WINS!")
+                score_y = (resolution / 2) - ((len(winner) * 24) / 2)
+
+                window.blit(score, (score_y, resolution - x_reset + 25))
+                end = True
 
         ##react if one of the players can't play anymore
         rip = s.rstrip(":\n").split(" ")
@@ -274,10 +305,11 @@ while is_running:
         by_font = pygame.font.Font(game_font, 18)
         by_who = by_font.render("by altikka", True, "#38c5f8")
         #window.blit(by_who, (220, 510))
-        window.blit(by_who, (10, 10))
+        window.blit(by_who, (610, 10))#was 10, 10
         bye_font = pygame.font.Font(game_font, 16)
         bye = bye_font.render("Press 'Esc' to exit", True, "#000000")
-        window.blit(bye, (260, 530))
+        bye_y = (resolution / 2) - ((len("Press 'Esc' to exit") * 16) / 2)
+        window.blit(bye, (bye_y, 530))
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
