@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:11:26 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/19 16:01:07 by altikka          ###   ########.fr       */
+/*   Updated: 2022/09/06 09:22:45 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 static void	set_neighbouring(t_grid *grid, t_pos index, char heat)
 {
 	if (grid->arr[index.x][index.y] == (heat - 1) && index.x > 0
-			&& grid->arr[index.x - 1][index.y] == '.')
+			&& grid->arr[index.x - 1][index.y] == ' ')
 		grid->arr[index.x - 1][index.y] = heat;
 	if (grid->arr[index.x][index.y] == (heat - 1) && index.y > 0
-			&& grid->arr[index.x][index.y - 1] == '.')
+			&& grid->arr[index.x][index.y - 1] == ' ')
 		grid->arr[index.x][index.y - 1] = heat;
 	if (grid->arr[index.x][index.y] == (heat - 1) && index.x < grid->size.x - 1
-			&& grid->arr[index.x + 1][index.y] == '.')
+			&& grid->arr[index.x + 1][index.y] == ' ')
 		grid->arr[index.x + 1][index.y] = heat;
 	if (grid->arr[index.x][index.y] == (heat - 1) && index.y < grid->size.y - 1
-			&& grid->arr[index.x][index.y + 1] == '.')
+			&& grid->arr[index.x][index.y + 1] == ' ')
 		grid->arr[index.x][index.y + 1] = heat;
 }
 
@@ -33,7 +33,7 @@ static void	set_heatmap(t_grid *grid)
 	t_pos	index;
 	char	heat;
 
-	heat = '1';
+	heat = '"';
 	while (heat <= '~')
 	{
 		index.x = 0;
@@ -59,13 +59,13 @@ static void	init_heatmap(t_filler *f)
 	index.x = 0;
 	while (index.x < f->map.size.x)
 	{
-		ft_memset(f->heatmap.arr[index.x], '.', f->heatmap.size.y);
+		ft_memset(f->heatmap.arr[index.x], ' ', f->heatmap.size.y);
 		index.y = 0;
 		while (index.y < f->map.size.y)
 		{
 			ch = f->map.arr[index.x][index.y];
 			if (ft_toupper(ch) == f->opponent)
-				f->heatmap.arr[index.x][index.y] = '0';
+				f->heatmap.arr[index.x][index.y] = '!';
 			index.y++;
 		}
 		index.x++;
@@ -82,7 +82,7 @@ int	parse_heatmap(t_filler *f)
 			return (panic(NULL, "Error: allocating heatmap failed"));
 	}
 	init_heatmap(f);
-	set_grid_psoi(&(f->heatmap), '0');
+	set_grid_psoi(&(f->heatmap), '!');
 	set_heatmap(&(f->heatmap));
 	return (1);
 }
