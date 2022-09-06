@@ -6,11 +6,40 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 12:30:44 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/12 12:34:50 by altikka          ###   ########.fr       */
+/*   Updated: 2022/09/06 17:39:32 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
+
+void	adjust_placement(t_filler *f, t_pos *answer, t_pos index)
+{
+	if (f->heat < f->best_heat)
+	{
+		f->best_heat = f->heat;
+		*answer = index;
+	}
+	if (f->heat == f->best_heat)
+	{
+		if (f->heatmap.max.x < f->map.max.x || f->heatmap.max.y < f->map.max.y)
+		{
+			if ((f->heatmap.max.x + 1 < f->map.size.x
+					|| f->heatmap.max.y + 1 < f->map.size.y)
+				&& f->map.size.x - f->heatmap.max.x
+				> f->map.size.y - f->heatmap.max.y)
+			{
+				if (index.x > answer->x || index.y < answer->y)
+					*answer = index;
+			}
+			else
+			{
+				if (index.x < answer->x || index.y > answer->y)
+					*answer = index;
+			}
+		}
+		f->best_heat = f->heat;
+	}
+}
 
 int	calc_heat(t_filler *f, t_pos index)
 {
