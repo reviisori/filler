@@ -6,7 +6,7 @@
 #    By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/25 14:26:19 by altikka           #+#    #+#              #
-#    Updated: 2022/09/06 10:40:06 by altikka          ###   ########.fr        #
+#    Updated: 2022/09/06 18:33:42 by altikka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -179,6 +179,9 @@ def play():
         x = 0
         while x < map_x:
             s = sys.stdin.readline()
+            if not s:
+                print("MV meltdown!")
+                break
             y = 4
             while y < map_y + 4:
                 if s[y] == 'O':
@@ -199,13 +202,19 @@ def play():
 
         ###IV get piece data to skip it:
         piece = return_next_line(0)
-        piece_size = piece.rstrip(":\n").split(" ")
-        piece_x = int(piece_size[1])
-        piece_y = int(piece_size[2])
-        s = return_next_line(piece_x)
+        if piece:
+            piece_size = piece.rstrip(":\n").split(" ")
+            piece_x = int(piece_size[1])
+            piece_y = int(piece_size[2])
+            s = return_next_line(piece_x)
 
         ###final scores:
         s = return_next_line(0)
+        ###sometimes MV freaks out if both players stop moving:
+        double_ko = s.rstrip(":\n").split(" ")
+        if "Piece" in double_ko[0]:
+            s = return_next_line(int(double_ko[1]) + 1)
+
         fin_o = s.split(" ")
         if "fin" in fin_o[2]:
             score_o = fin_o[3]
