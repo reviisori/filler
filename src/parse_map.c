@@ -6,16 +6,18 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:06:36 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/19 15:59:42 by altikka          ###   ########.fr       */
+/*   Updated: 2022/09/08 11:11:26 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-//31: skip 'Plateau: X Y'
-//32: skip '    01234...'
-//33: skip '000 ' w/ offset 4 in the beginning of the line
-//35: points of interest
+/*
+ *31: skip 'Plateau: X Y'
+ *32: skip '    01234...'
+ *33: skip '000 ' w/ offset 4 in the beginning of the line
+ *35: points of interest
+ */
 
 int	parse_map(t_filler *f)
 {
