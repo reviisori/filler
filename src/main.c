@@ -6,13 +6,15 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:18:34 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/21 15:52:17 by altikka          ###   ########.fr       */
+/*   Updated: 2022/09/08 11:02:08 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-//30: debugging
+/*
+ *30: optional debugging function
+ */
 
 int	main(void)
 {
