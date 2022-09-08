@@ -6,7 +6,7 @@
 /*   By: altikka <altikka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:26:18 by altikka           #+#    #+#             */
-/*   Updated: 2022/07/08 16:48:22 by altikka          ###   ########.fr       */
+/*   Updated: 2022/09/08 11:09:31 by altikka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,6 @@ static void	print_grid(t_filler *f, FILE *file)
 	}
 	fprintf(file, "\n");
 }
-
-//player info:
-//map & piece size:
-//points of interest:
-//map, heatmap & piece:
 
 int	debug(t_filler *f)
 {
