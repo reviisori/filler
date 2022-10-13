@@ -1,14 +1,8 @@
 # FILLER
 
-```
-███████ ██ ██      ██      ███████ ██████  
-██      ██ ██      ██      ██      ██   ██ 
-█████   ██ ██      ██      █████   ██████  
-██      ██ ██      ██      ██      ██   ██ 
-██      ██ ███████ ███████ ███████ ██   ██
-```
+<img width="630" alt="frm_logo" src="https://user-images.githubusercontent.com/77926655/195692606-c60596b6-0aa1-4fdd-8a7b-63c8cd1f2749.png">
 
-**Inroduction**
+#### **Inroduction**
 
 **Filler** is a project about algorithmic game, purpose of which is to fill a fixed sized grid with pieces of random size and shape. Pieces can’t be stacked more than one square above each other and they can’t exceed the grid. If these conditions are not met - the game ends.
 
@@ -56,7 +50,7 @@ With all the data and a heat map at my disposal all that was left to do was plac
 
 <img width="790" alt="frm_p3-1" src="https://user-images.githubusercontent.com/77926655/195690234-692e98e4-4e80-40f2-83a5-72cae93a2068.png">
 
-**Bonus — Visualisation**
+#### **Bonus Part — Visualisation**
 
 To challenge myself properly I decided to pick up a completely new programming language for this part. The visualisation for this project was done using Python and its pygame module. All the assets were hand-crafted or hand-picked to give it a retro style appearance:
 
